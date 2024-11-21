@@ -20,6 +20,127 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+
+## Creating "(dashboard)" in app directory
+- Create following pages - 
+  - chat, profile, tours
+
+
+```tsx
+export const metadata: Metadata = {
+  title: 'AI Assistant',
+  description:
+    'AI Assistant: Your AI language companion. Powered by OpenAI to enhances your conversations, content creation, and more!',
+};
+```
+
+- Change app/page.tsx boilerplate code as follows:
+
+```tsx
+import Link from 'next/link';
+const HomePage = () => {
+  return (
+    <div className='hero min-h-screen bg-base-200'>
+      <div className='hero-content text-center'>
+        <div className='max-w-md'>
+          <h1 className='text-6xl font-bold text-primary'>GPTGenius</h1>
+          <p className='py-6 text-lg leading-loose'>
+            GPTGenius: Your AI language companion. Powered by OpenAI, it
+            enhances your conversations, content creation, and more!
+          </p>
+          <Link href='/chat' className='btn btn-secondary '>
+            Get Started
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HomePage;
+```
+Next we will install the Clerk package. 
+Clerk has released a new version, however, I recommend continuing using the older version of Clerk “@clerk/nextjs@5.0.1” that we previously installed. At the end of the project, you will find an additional lesson where I provide the necessary steps to refactor our codebase to switch to the latest version of Clerk.
+
+
+```sh
+npm install @clerk/nextjs
+```
+
+Create the file under root directory with the name of 
+.env.local
+
+Add .env to file .gitignore to suppress from Git repos when commiting
+
+Copy and paste the values from Clerk in file .env.local
+```js
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = your_publishable_key;
+CLERK_SECRET_KEY = your_secret_key;
+```
+
+Environment variables with this `NEXT_PUBLIC_` prefix are exposed to client-side JavaScript code, while those without the prefix are only accessible on the server-side and are not exposed to the client-side code.
+
+```sh
+NEXT_PUBLIC_
+```
+
+```js
+const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+```
+
+
+- Setup ClerkProvider in layout file...
+layout.js
+
+```js
+import { ClerkProvider } from '@clerk/nextjs';
+
+export default function RootLayout({ children }) {
+  return (
+    <ClerkProvider>
+      <html lang='en'>
+        <body>{children}</body>
+      </html>
+    </ClerkProvider>
+  );
+}
+```
+
+### Dependencies
+```sh
+√ -> history
+ 1095  npm install react-icons --save --force
+ 1096  npm run dev
+ 1106  npm install react-hot-toast@2.4.1 react-icons@4.11.0 --force
+ 1107  npm audit fix
+ 1109  npm i @tanstack/react-query @tanstack/react-query-devtools
+ ```
+
+
+
+
+# OpenAI Integration
+
+## OPENAI API
+
+[Pricing](https://openai.com/pricing)
+[OpenAI Docs.](https://platform.openai.com/docs/overview)
+[OpenAI Playground](https://platform.openai.com/playground/chat?models=gpt-4o)
+[OpenAI API Reference](https://platform.openai.com/docs/api-reference/introduction)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
